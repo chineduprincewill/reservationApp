@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useLocation, Link } from "react-router-dom"
 import axios from "../../../api/axios"
 import { AuthContext } from "../../../context/AuthContext"
@@ -104,7 +104,7 @@ const RoomTypes = () => {
     }
 
 
-    const getRoomtypes = async () => {
+    const getRoomtypes = useCallback( async () => {
 
         try{
 
@@ -124,7 +124,7 @@ const RoomTypes = () => {
                 console.log(err.response.data);
             }
         }
-    }
+    }, [id, token]);
 
 
     const editRoomtype = (typid) => {
@@ -207,7 +207,7 @@ const RoomTypes = () => {
     
         getRoomtypes();
 
-    }, [roomtype, updatemsg]);
+    }, [roomtype, updatemsg, getRoomtypes]);
 
     return (
         <div className="main-content">

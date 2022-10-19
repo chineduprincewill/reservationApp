@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react"
+import { Fragment, useCallback, useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "../../api/axios"
 
@@ -14,7 +14,7 @@ const Hotels = () => {
 
     const [hotels, setHotels] = useState(null);
 
-    const getAllHotels = async () => {
+    const getAllHotels = useCallback( async () => {
 
         try{
 
@@ -35,7 +35,7 @@ const Hotels = () => {
                 console.log(err.response.data);
             }
         }
-    }
+    }, [token]);
 
 
     const deleteHotel = async (id, hotelname) => {
@@ -72,7 +72,7 @@ const Hotels = () => {
     useEffect(() => {
 
         getAllHotels();
-    }, [])
+    }, [getAllHotels])
 
     return (
         <div className="main-content">

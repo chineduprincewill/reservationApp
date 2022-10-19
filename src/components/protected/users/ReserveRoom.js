@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, Fragment } from "react"
+import { useContext, useState, useEffect, Fragment, useCallback } from "react"
 import { useLocation, Link } from 'react-router-dom';
 import axios from "../../../api/axios"
 
@@ -19,7 +19,7 @@ const ReserveRoom = () => {
     const [rsv, setRsv] = useState('Reserve');
     const [successmsg, setSuccessmsg] = useState(null);
 
-    const getAllHotels = async () => {
+    const getAllHotels = useCallback( async () => {
 
         try{
 
@@ -38,7 +38,7 @@ const ReserveRoom = () => {
                 console.log(err.response.data);
             }
         }
-    }
+    }, [token]);
 
 
     const fetchRoomtypes = async (val) => {
@@ -110,7 +110,7 @@ const ReserveRoom = () => {
     useEffect(() => {
 
         getAllHotels();
-    }, [])
+    }, [getAllHotels])
 
 
 

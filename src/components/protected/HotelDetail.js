@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import axios from "../../api/axios"
 import { AuthContext } from "../../context/AuthContext"
@@ -12,7 +12,7 @@ const HotelDetail = () => {
 
     const [hotel, setHotel] = useState(null);
 
-    const getHotelInfo = async () => {
+    const getHotelInfo = useCallback( async () => {
 
         try{
 
@@ -33,13 +33,13 @@ const HotelDetail = () => {
                 console.log(err.response.data);
             }
         }
-    }
+    }, [hotelid, token]);
 
 
     useEffect(() => {
 
         getHotelInfo();
-    }, [])
+    }, [getHotelInfo])
 
 
     return (

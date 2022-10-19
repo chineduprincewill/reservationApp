@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react"
+import { useState, useContext, useEffect, useCallback } from "react"
 import axios from "../../../api/axios";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
@@ -168,7 +168,7 @@ const Users = () => {
     }
 
 
-    const getAllUsers = async () => {
+    const getAllUsers = useCallback( async () => {
 
         try{
 
@@ -188,13 +188,13 @@ const Users = () => {
                 console.log(err.response.data);
             }
         }
-    }
+    }, [token]);
 
 
     useEffect(() => {
 
         getAllUsers()
-    }, [userinfo])
+    }, [userinfo, getAllUsers])
 
 
     return (
