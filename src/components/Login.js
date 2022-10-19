@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useEffect, useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
@@ -9,7 +9,7 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    const { authenticate } = useContext(AuthContext);
+    const { isAuthenticated, authenticate } = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -54,6 +54,12 @@ const Login = () => {
         setIsLogin('Sign In');
 
     }
+
+    useEffect(() => {
+        if(isAuthenticated){
+            navigate("/dashboard");
+        }
+    }, [isAuthenticated, navigate]);
 
     return (
         <div className="auth-page-wrapper pt-5">
