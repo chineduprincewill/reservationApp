@@ -18,7 +18,7 @@ const Dashboard = () => {
 
                                 <div className="page-title-right">
                                     <ol className="breadcrumb m-0">
-                                        <li className="breadcrumb-item"><a href="#">Dashboards</a></li>
+                                        <li className="breadcrumb-item"><Link to="/dashboard">Dashboards</Link></li>
                                         <li className="breadcrumb-item active">Dashboard</li>
                                     </ol>
                                 </div>
@@ -82,7 +82,7 @@ const Dashboard = () => {
                                     <div className="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 className="fs-22 fw-semibold ff-secondary mb-4"><span className="counter-value" data-target="559.25">0</span> </h4>
-                                            <a href="#" className="text-decoration-none">View more...</a>
+                                            <Link to="/dashboard" className="text-decoration-none">View more...</Link>
                                         </div>
                                         <div className="avatar-sm flex-shrink-0">
                                             <span className="avatar-title bg-soft-success rounded fs-3">

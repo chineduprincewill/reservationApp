@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext"
 
 const Header = () => {
@@ -20,11 +20,11 @@ const Header = () => {
                 <div className="navbar-header">
                     <div className="d-flex">
                         <div className="navbar-brand-box horizontal-logo">
-                            <a href="#" className="logo logo-dark">
+                            <Link to="/dashboard" className="logo logo-dark">
                                 <span className="logo-sm">
                                     <img src="assets/images/logo-sm.png" alt="" height="22" />
                                 </span>
-                            </a>
+                            </Link>
                         </div>
 
                     </div>

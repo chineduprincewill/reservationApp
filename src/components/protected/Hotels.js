@@ -161,7 +161,7 @@ const Hotels = () => {
                                                         <td>{hotel.location}</td>
                                                         <td>{hotel.city}</td>
                                                         <td>{hotel.state}</td>
-                                                        <td><a href={`${hotel.hotelsNg_link}`} target="_blank" >more info...</a></td>
+                                                        <td><a href={`${hotel.hotelsNg_link}`} target="_blank" rel="noreferrer">more info...</a></td>
                                                         <td>&#8358; {hotel.price}</td>
                                                         <td>
                                                             <div className="dropdown d-inline-block">

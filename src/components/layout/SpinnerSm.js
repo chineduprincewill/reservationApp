@@ -1,7 +1,7 @@
 import React from 'react';
 import spinner from './spinner4.gif';
 
-export default () => {
+const SpinnerSm = () => {
   return (
     <div className="col-md-12">
       <img 
@@ -12,3 +12,5 @@ export default () => {
     </div>
   );
 }
+
+export default SpinnerSm

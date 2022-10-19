@@ -1,8 +1,7 @@
-import { Fragment, useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom"
 import axios from "../../api/axios"
 import { AuthContext } from "../../context/AuthContext"
-import hotel from './hotel.jpg'
 import SpinnerSm from "../layout/SpinnerSm"
 
 
@@ -117,7 +116,7 @@ const HotelDetail = () => {
                                             <span className="col-sm-3 py-2"><strong>Address</strong></span><span className="col-sm-9 py-2">{hotel.location}</span>
                                             <span className="col-sm-3 py-2"><strong>City</strong></span><span className="col-sm-9 py-2">{hotel.city}</span>
                                             <span className="col-sm-3 py-2"><strong>State</strong></span><span className="col-sm-9 py-2">{hotel.state}</span>
-                                            <span className="col-sm-3 py-2"><strong>Detail</strong></span><span className="col-sm-9 py-2"><a href={`${hotel.hotelsNg_link}`} target='_blank'>Click here...</a></span>
+                                            <span className="col-sm-3 py-2"><strong>Detail</strong></span><span className="col-sm-9 py-2"><a href={`${hotel.hotelsNg_link}`} target='_blank' rel="noreferrer">Click here...</a></span>
                                             <span className="col-sm-3 py-2"><strong>Price</strong></span><span className="col-sm-9 py-2">&#8358; {hotel.price}</span>
                                             <span className="col-sm-3 py-2"><strong>Available slots</strong></span><span className="col-sm-9 py-2">{hotel.available_slots}</span>
                                         </div>
