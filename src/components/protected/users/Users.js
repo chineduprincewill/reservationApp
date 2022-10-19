@@ -78,7 +78,7 @@ const Users = () => {
 
         if(window.confirm(`Are you sure you want to delete ${firstname} ${lastname}?`)){
 
-            setDelstatus(<span class="text text-danger p-3">deleting user...</span>);
+            setDelstatus(<span className="text text-danger p-3">deleting user...</span>);
 
             try{
 
@@ -299,10 +299,10 @@ const Users = () => {
                                                 required
                                             />
                                         </div>
-                                        <div class="input-group py-2">
-                                            <label class="input-group-text" htmlFor="inputGroupSelect01">Branch</label>
+                                        <div className="input-group py-2">
+                                            <label className="input-group-text" htmlFor="inputGroupSelect01">Branch</label>
                                             <select 
-                                                class="form-select" 
+                                                className="form-select" 
                                                 id="inputGroupSelect01"
                                                 value={church_branch}
                                                 onChange={(e) => setChurch_branch(e.target.value)}
@@ -314,10 +314,10 @@ const Users = () => {
                                                 <option value="Onitsha">Onitsha</option>
                                             </select>
                                         </div>
-                                        <div class="input-group py-2">
-                                            <label class="input-group-text" htmlFor="inputGroupSelect01">Gender</label>
+                                        <div className="input-group py-2">
+                                            <label className="input-group-text" htmlFor="inputGroupSelect01">Gender</label>
                                             <select 
-                                                class="form-select" 
+                                                className="form-select" 
                                                 id="inputGroupSelect01"
                                                 value={gender}
                                                 onChange={(e) => setGender(e.target.value)}
@@ -356,7 +356,7 @@ const Users = () => {
                                 <div className="card-body">
                                     {delstatus !== '' && delstatus}
                                 {users === null ? <SpinnerSm /> : (
-                                        <table id="model-datatables" class="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
+                                        <table id="model-datatables" className="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import axios from "../../api/axios"
 
@@ -24,8 +24,8 @@ const Hotels = () => {
                 }
             );
             
-            console.log(response.data.response.data);
-            setHotels(response.data.response.data);
+            console.log(response.data.message.data);
+            setHotels(response.data.message.data);
 
 
         } catch (err) {
@@ -42,7 +42,6 @@ const Hotels = () => {
 
         if(window.confirm(`Are you sure you want to delete ${hotelname}?`)){
 
-            //setDelstatus(<span class="text text-danger p-3">deleting hotel...</span>);
 
             try{
 
@@ -134,14 +133,14 @@ const Hotels = () => {
                     </div>
 
                     <div className="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="card-title mb-0">List of all Hotels</h5>
+                        <div className="col-lg-12">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h5 className="card-title mb-0">List of all Hotels</h5>
                                 </div>
-                                <div class="card-body">           
+                                <div className="card-body">           
                                     {hotels === null ? <Spinner /> : (
-                                        <table id="model-datatables" class="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
+                                        <table id="model-datatables" className="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
                                             <thead>
                                                 <tr>
                                                     <th>S/No</th>
@@ -209,31 +208,33 @@ const Hotels = () => {
                                                                 </ul>
                                                             </div>
                                                         </td>
-
-                                                        <div className="modal fade" id={`modal-${hotel.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div className="modal-dialog">
-                                                                <div className="modal-content">
-                                                                    <div className="modal-header">
-                                                                        <h4 className="modal-title" id="exampleModalLabel">{hotel.hotel_name}</h4>
-                                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div className="modal-body">
-                                                                        <h5>Features</h5>
-                                                                        {hotel.features.length > 0 && (
-                                                                            <ul>
-                                                                                {hotel.features.map((feature, index) => {
-                                                                                    return <li className="p-1" key={index}>{feature}</li>
-                                                                                })}
-                                                                            </ul>
-                                                                            
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="modal-footer">
-                                                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <Fragment>
+                                                            <div className="modal fade" id={`modal-${hotel.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div className="modal-dialog">
+                                                                    <div className="modal-content">
+                                                                        <div className="modal-header">
+                                                                            <h4 className="modal-title" id="exampleModalLabel">{hotel.hotel_name}</h4>
+                                                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div className="modal-body">
+                                                                            <h5>Features</h5>
+                                                                            {hotel.features.length > 0 && (
+                                                                                <ul>
+                                                                                    {hotel.features.map((feature, index) => {
+                                                                                        return <li className="p-1" key={index}>{feature}</li>
+                                                                                    })}
+                                                                                </ul>
+                                                                                
+                                                                            )}
+                                                                        </div>
+                                                                        <div className="modal-footer">
+                                                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </Fragment>
+                                                            
                                                     </tr>)
                                                 })}
                                                
