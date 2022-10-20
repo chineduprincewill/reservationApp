@@ -42,9 +42,9 @@ const Navbar = () => {
                         </li>
 
                         <li className="nav-item">
-                            <a className="nav-link menu-link" href="widgets.html">
+                            <Link className="nav-link menu-link" to="/reservations">
                                 <i className="ri-honour-line"></i> <span data-key="t-widgets">Reservations</span>
-                            </a>
+                            </Link>
                         </li>
                         <li className="menu-title"><span data-key="t-menu">User Manager</span></li>
                         <li className="nav-item">

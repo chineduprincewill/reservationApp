@@ -14,10 +14,13 @@ const ReserveRoom = () => {
     
     const [roomtype, setRoomtype] = useState();
     const [hotelid, setHotelid] = useState();
+    const [checkin, setCheckin] = useState();
+    const [duration, setDuration] = useState();
     const [hotels, setHotels] = useState(null);
     const [hotel, setHotel] = useState(null);
     const [rsv, setRsv] = useState('Reserve');
     const [successmsg, setSuccessmsg] = useState(null);
+
 
     const getAllHotels = useCallback( async () => {
 
@@ -28,7 +31,8 @@ const ReserveRoom = () => {
                     headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
                 }
             );
-            setHotels(response.data.response.data);
+            setHotels(response.data.message.data);
+            //console.log(response.data);
 
 
         } catch (err) {
@@ -77,7 +81,9 @@ const ReserveRoom = () => {
             const data = {
                 hotel_id : hotelid,
                 hotel_room_type_id : roomtype,
-                user_id : id
+                user_id : id,
+                check_in_date : checkin,
+                check_in_duration : duration
             }
 
             console.log(data);
@@ -197,10 +203,10 @@ const ReserveRoom = () => {
                                 </div>
                                 <div className="card-body">
                                     <form onSubmit={handleReserve}>
-                                        <div class="input-group py-2">
-                                            <label class="input-group-text" htmlFor="inputGroupSelect01">Hotel</label>
+                                        <div className="input-group py-2">
+                                            <label className="input-group-text" htmlFor="inputGroupSelect01">Hotel</label>
                                             <select 
-                                                class="form-select" 
+                                                className="form-select" 
                                                 id="inputGroupSelect01"
                                                 value={hotelid}
                                                 onChange={(e) => fetchRoomtypes(e.target.value)}
@@ -242,7 +248,34 @@ const ReserveRoom = () => {
                                                 </ul>
                                             ) : <span className="text text-danger">No available room type for the selected hotel yet!</span>
                                         )}
-                                       
+
+                                        <div className="input-group py-2">
+                                            <label className="input-group-text" htmlFor="inputGroupSelect01">Check in Date</label>
+                                            <input 
+                                                type="date" 
+                                                className="form-control" 
+                                                aria-label="Sizing example input" 
+                                                aria-describedby="inputGroup-sizing-default" 
+                                                value={checkin}
+                                                onChange={(e) => setCheckin(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className="input-group py-2">
+                                            <label className="input-group-text" htmlFor="inputGroupSelect01">Duration</label>
+                                            <input 
+                                                type="number" 
+                                                className="form-control" 
+                                                aria-label="Sizing example input" 
+                                                aria-describedby="inputGroup-sizing-default" 
+                                                placeholder="No. of days"
+                                                value={duration}
+                                                onChange={(e) => setDuration(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+
                                         <div className="input-group py-2">
                                             <button type="submit" className="btn btn-soft-success w-100">{rsv}</button>
                                         </div>
