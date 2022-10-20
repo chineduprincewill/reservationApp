@@ -158,8 +158,16 @@ const Reservations = () => {
                                                                         className="btn btn-link text-decoration-none"
                                                                         onClick={(e) => deleteReservation(reserve.id)}
                                                                     >
-                                                                        <i className="ri-delete-bin-fill align-bottom me-2 text-danger"></i>
+                                                                        <i className="ri-delete-bin-fill align-bottom text-danger"></i>
                                                                     </button>
+
+                                                                    <Link 
+                                                                        to='/edit-reservation'
+                                                                        state={{ reserveObject : reserve }}
+                                                                        className="btn btn-link text-decoration-none"
+                                                                    >
+                                                                        <i className="ri-pencil-fill align-bottom text-primary"></i>
+                                                                    </Link>
                                                                 </td>
                                                             </tr>
                                                         )   
