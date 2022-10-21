@@ -50,7 +50,7 @@ const EditReservation = () => {
             let hotelval;
             val === undefined ? hotelval = hotel_id : hotelval = val;
 
-            setHotelid(val);
+            setHotelid(hotelval);
 
             const response = await axios.get(`hotels/${hotelval}`,
                 {
