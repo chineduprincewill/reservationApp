@@ -81,7 +81,7 @@ const EditReservation = () => {
 
             const data = {
                 hotel_id : hotelid,
-                hotel_room_type_id : roomtype,
+                hotel_room_type_id : roomtype.toString(),
                 check_in_date : checkin,
                 check_in_duration : duration
             }
