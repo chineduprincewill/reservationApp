@@ -139,6 +139,7 @@ const Reservations = () => {
                                                     <th>Price</th>
                                                     <th>Check in Date</th>
                                                     <th>Duration</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -153,6 +154,11 @@ const Reservations = () => {
                                                                 <td>&#8358;{reserve.price}</td>
                                                                 <td><Moment format='MMMM Do YYYY'>{reserve.check_in_date}</Moment></td>
                                                                 <td>{reserve.check_in_duration} days</td>
+                                                                <td>
+                                                                    {reserve.status === 0 && <span className="text text-danger">Declined</span>}
+                                                                    {reserve.status === 1 && <span className="text text-success">Paid</span>}
+                                                                    {reserve.status === 2 && <span className="text text-warning">Pending</span>}
+                                                                </td>
                                                                 <td>
                                                                     <button 
                                                                         className="btn btn-link text-decoration-none"

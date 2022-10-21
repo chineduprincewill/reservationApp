@@ -9,12 +9,13 @@ const EditReservation = () => {
     
     const location = useLocation();
     const { user, token } = useContext(AuthContext)
-    const { id, hotel_id, hotel_room_type_id, user_name, user_phone, hotel_name, check_in_date, check_in_duration } = location.state?.reserveObject;
+    const { id, hotel_id, hotel_room_type_id, user_name, user_phone, hotel_name, status, check_in_date, check_in_duration } = location.state?.reserveObject;
     
     const [roomtype, setRoomtype] = useState(hotel_room_type_id);
     const [hotelid, setHotelid] = useState(hotel_id);
     const [checkin, setCheckin] = useState(check_in_date);
     const [duration, setDuration] = useState(check_in_duration);
+    const [stat, setStat] = useState(status);
     const [hotels, setHotels] = useState(null);
     const [hotel, setHotel] = useState(null);
     const [rsv, setRsv] = useState('Reserve');
@@ -83,7 +84,8 @@ const EditReservation = () => {
                 hotel_id : hotelid,
                 hotel_room_type_id : roomtype.toString(),
                 check_in_date : checkin,
-                check_in_duration : duration
+                check_in_duration : duration,
+                status : stat
             }
 
             console.log(data);
@@ -256,7 +258,6 @@ const EditReservation = () => {
                                                 aria-describedby="inputGroup-sizing-default" 
                                                 value={checkin}
                                                 onChange={(e) => setCheckin(e.target.value)}
-                                                required
                                             />
                                         </div>
 
@@ -272,6 +273,27 @@ const EditReservation = () => {
                                                 onChange={(e) => setDuration(e.target.value)}
                                                 required
                                             />
+                                        </div>
+                                        
+                                        <p className="text text-warning pt-1">Current status : 
+                                            {status === 0 && <span className="text text-danger">Declined</span>}
+                                            {status === 1 && <span className="text text-success">Paid</span>}
+                                            {status === 2 && <span className="text text-warning">Pending</span>}
+                                        </p>
+                                        <div className="input-group pb-2">
+                                            <label className="input-group-text" htmlFor="inputGroupSelect01">Payment status</label>
+                                            <select 
+                                                className="form-select" 
+                                                id="inputGroupSelect01"
+                                                value={stat}
+                                                onChange={(e) => setStat(e.target.value)}
+                                                required
+                                            >
+                                                <option>select status</option>
+                                                <option value='0'>Declined</option>
+                                                <option value='1'>Paid</option>
+                                                <option value='2'>Pending</option>
+                                            </select>
                                         </div>
 
                                         <div className="input-group py-2">
