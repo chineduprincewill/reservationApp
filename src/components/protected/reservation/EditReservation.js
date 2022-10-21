@@ -4,15 +4,14 @@ import axios from "../../../api/axios"
 
 import { AuthContext } from "../../../context/AuthContext"
 
-const RESERVE_API = 'hotel-reservations';
 
 const EditReservation = () => {
     
     const location = useLocation();
     const { user, token } = useContext(AuthContext)
-    const { id, hotel_id, hotel_room_type_id, user_id, user_name, user_phone, hotel_name, price, check_in_date, check_in_duration } = location.state?.reserveObject;
+    const { id, hotel_id, hotel_room_type_id, user_name, user_phone, hotel_name, check_in_date, check_in_duration } = location.state?.reserveObject;
     
-    const [roomtype, setRoomtype] = useState();
+    const [roomtype, setRoomtype] = useState(hotel_room_type_id);
     const [hotelid, setHotelid] = useState(hotel_id);
     const [checkin, setCheckin] = useState(check_in_date);
     const [duration, setDuration] = useState(check_in_duration);
@@ -48,12 +47,12 @@ const EditReservation = () => {
     const fetchRoomtypes = useCallback( async (val) => {
 
         try{
-
-            val === undefined ? val = hotel_id : val = val;
+            let hotelval;
+            val === undefined ? hotelval = hotel_id : hotelval = val;
 
             setHotelid(val);
 
-            const response = await axios.get(`hotels/${val}`,
+            const response = await axios.get(`hotels/${hotelval}`,
                 {
                     headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
                 }
@@ -71,7 +70,7 @@ const EditReservation = () => {
             }
         }
 
-    }, [token]);
+    }, [token, hotel_id]);
 
     const handleReserve = async (e) => {
         e.preventDefault();

@@ -82,7 +82,7 @@ const Dashboard = () => {
                                     <div className="d-flex align-items-end justify-content-between mt-4">
                                         <div>
                                             <h4 className="fs-22 fw-semibold ff-secondary mb-4"><span className="counter-value" data-target="559.25">0</span> </h4>
-                                            <Link to="/dashboard" className="text-decoration-none">View more...</Link>
+                                            <Link to="/reservations" className="text-decoration-none">View more...</Link>
                                         </div>
                                         <div className="avatar-sm flex-shrink-0">
                                             <span className="avatar-title bg-soft-success rounded fs-3">
