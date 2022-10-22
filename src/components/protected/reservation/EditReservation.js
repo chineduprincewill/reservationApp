@@ -9,7 +9,7 @@ const EditReservation = () => {
     
     const location = useLocation();
     const { user, token } = useContext(AuthContext)
-    const { id, hotel_id, hotel_room_type_id, user_name, user_phone, hotel_name, status, check_in_date, check_in_duration } = location.state?.reserveObject;
+    const { id, hotel_id, hotel_room_type_id, user_id, user_name, user_phone, hotel_name, status, check_in_date, check_in_duration } = location.state?.reserveObject;
     
     const [roomtype, setRoomtype] = useState(hotel_room_type_id);
     const [hotelid, setHotelid] = useState(hotel_id);
@@ -88,7 +88,7 @@ const EditReservation = () => {
             const data = {
                 hotel_id : hotelid,
                 hotel_room_type_id : roomtype.toString(),
-                user_id : user.id,
+                user_id : user_id,
                 check_in_date : checkin,
                 check_in_duration : duration,
                 status : stat
