@@ -54,15 +54,15 @@ const Hotels = () => {
             }
 
             const response = await axios.post('hotels/search',
-                data.search_term,
+                data,
                 {
                     headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
                 }
             );
             
-            console.log(response.data.message);
-            setHotels(response.data.message);
-            //setPaging(response.data.message);
+            //console.log(response.data.message.data);
+            setHotels(response.data.message.data);
+            setPaging(response.data.message);
 
 
         } catch (err) {
@@ -177,24 +177,28 @@ const Hotels = () => {
                                                                 <input 
                                                                     type="text" 
                                                                     className="form-control border-0 dash-filter-picker shadow" 
-                                                                    data-provider="flatpickr" 
-                                                                    data-range-date="true" 
-                                                                    data-date-format="d M, Y" 
-                                                                    data-deafult-date="01 Jan 2022 to 31 Jan 2022" 
+                                                                    placeholder="Enter search value"
                                                                     value={searchterm}
                                                                     onChange={(e) => setSearchterm(e.target.value)}
+                                                                    required
                                                                 />
-                                                                <div className="input-group-text bg-primary border-primary text-white">
-                                                                    <i className="ri-calendar-2-line"></i>
-                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div className="col-auto">
                                                             <button 
                                                                 type="submit" 
                                                                 className="btn btn-soft-success">
-                                                                    <i className="ri-search-eye-fill align-middle me-1"></i> {search}
-                                                                </button>
+                                                                <i className="ri-search-eye-fill align-middle me-1"></i> {search}
+                                                            </button>
+                                                        </div>
+                                                        <div className="col-auto">
+                                                            <button 
+                                                                type="button" 
+                                                                className="btn btn-soft-danger"
+                                                                onClick={(e) => window.location.reload()}
+                                                            >
+                                                                Reset
+                                                            </button>
                                                         </div>
                                                         <div className="col-auto">
                                                             <Link to='/create-hotel' type="button" className="btn btn-soft-primary"><i className="ri-add-circle-line align-middle me-1"></i> Create</Link>
