@@ -13,11 +13,13 @@ const Hotels = () => {
     const { user, token } = useContext(AuthContext);
 
     const [hotels, setHotels] = useState(null);
+    const [paging, setPaging] = useState(null);
+    const [searchterm, setSearchterm] = useState();
+    const [search, setSearch] = useState('Search...');
 
     const getAllHotels = useCallback( async () => {
 
         try{
-
             const response = await axios.get(ALL_HOTELS_API,
                 {
                     headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
@@ -26,6 +28,7 @@ const Hotels = () => {
             
             console.log(response.data.message.data);
             setHotels(response.data.message.data);
+            setPaging(response.data.message);
 
 
         } catch (err) {
@@ -36,6 +39,42 @@ const Hotels = () => {
             }
         }
     }, [token]);
+
+
+    const handleSearch = async (e) => {
+
+        e.preventDefault();
+
+        try{
+
+            setSearch('Searching...');
+
+            const data = {
+                search_term : searchterm
+            }
+
+            const response = await axios.post('hotels/search',
+                data.search_term,
+                {
+                    headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
+                }
+            );
+            
+            console.log(response.data.message);
+            setHotels(response.data.message);
+            //setPaging(response.data.message);
+
+
+        } catch (err) {
+            if (!err?.response) {
+                console.log('No Server Response');
+            } else {
+                console.log(err.response.data);
+            }
+        }
+
+        setSearch('Search...');
+    }
 
 
     const deleteHotel = async (id, hotelname) => {
@@ -65,6 +104,31 @@ const Hotels = () => {
             }
 
             //setDelstatus('');
+        }
+    }
+
+    const goToPage = async (url) => {
+
+        let urllink = url.split('?')[1];
+        try{
+
+            const response = await axios.get(`hotels?${urllink}`,
+                {
+                    headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
+                }
+            );
+            
+            console.log(response.data.message.data);
+            setHotels(response.data.message.data);
+            setPaging(response.data.message);
+
+
+        } catch (err) {
+            if (!err?.response) {
+                console.log('No Server Response');
+            } else {
+                console.log(err.response.data);
+            }
         }
     }
 
@@ -106,18 +170,31 @@ const Hotels = () => {
                                                 <p className="text-muted mb-0">What's happening with you today?</p>
                                             </div>
                                             <div className="mt-3 mt-lg-0">
-                                                <form >
+                                                <form onSubmit={handleSearch}>
                                                     <div className="row g-3 mb-0 align-items-center">
                                                         <div className="col-sm-auto">
                                                             <div className="input-group">
-                                                                <input type="text" className="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022" />
+                                                                <input 
+                                                                    type="text" 
+                                                                    className="form-control border-0 dash-filter-picker shadow" 
+                                                                    data-provider="flatpickr" 
+                                                                    data-range-date="true" 
+                                                                    data-date-format="d M, Y" 
+                                                                    data-deafult-date="01 Jan 2022 to 31 Jan 2022" 
+                                                                    value={searchterm}
+                                                                    onChange={(e) => setSearchterm(e.target.value)}
+                                                                />
                                                                 <div className="input-group-text bg-primary border-primary text-white">
                                                                     <i className="ri-calendar-2-line"></i>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div className="col-auto">
-                                                            <button type="button" className="btn btn-soft-success"><i className="ri-search-eye-fill align-middle me-1"></i> Search...</button>
+                                                            <button 
+                                                                type="submit" 
+                                                                className="btn btn-soft-success">
+                                                                    <i className="ri-search-eye-fill align-middle me-1"></i> {search}
+                                                                </button>
                                                         </div>
                                                         <div className="col-auto">
                                                             <Link to='/create-hotel' type="button" className="btn btn-soft-primary"><i className="ri-add-circle-line align-middle me-1"></i> Create</Link>
@@ -138,7 +215,31 @@ const Hotels = () => {
                                 <div className="card-header">
                                     <h5 className="card-title mb-0">List of all Hotels</h5>
                                 </div>
-                                <div className="card-body">           
+                                <div className="card-body">   
+                                    
+                                    {paging !== null && 
+                                        <p>
+                                            
+                                            {paging.links.length !== 0 && (
+                                                paging.links.map((link, index) => {
+                                                    return (link.url !== null && 
+                                                        <button 
+                                                            className={link.active ? 'btn btn-info p-2' : 'btn btn-default p-2'}
+                                                            onClick={(e) => goToPage(link.url)}
+                                                        >
+                                                            {link.label.split(' ')[0] === 'Next' ? link.label.split(' ')[0] : (link.label.split(' ')[1] === 'Previous' ? link.label.split(' ')[1] : link.label)}
+                                                        </button>
+                                                    )
+                                                }
+                                            ))}
+
+                                            <button className="btn btn-link text-info text-decoration-none border-left mx-1">
+                                                {`( ${paging.from} to ${paging.to} of ${paging.total} )`}
+                                            </button>
+                                            
+                                        </p>
+                                    }     
+
                                     {hotels === null ? <Spinner /> : (
                                         <table id="model-datatables" className="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
                                             <thead>
@@ -241,6 +342,28 @@ const Hotels = () => {
                                             </tbody>
                                         </table>
                                     )}
+                                    {paging !== null && 
+                                        <p>
+                                            
+                                            {paging.links.length !== 0 && (
+                                                paging.links.map((link, index) => {
+                                                    return (link.url !== null && 
+                                                        <button 
+                                                            className={link.active ? 'btn btn-info p-2' : 'btn btn-default p-2'}
+                                                            onClick={(e) => goToPage(link.url)}
+                                                        >
+                                                            {link.label.split(' ')[0] === 'Next' ? link.label.split(' ')[0] : (link.label.split(' ')[1] === 'Previous' ? link.label.split(' ')[1] : link.label)}
+                                                        </button>
+                                                    )
+                                                }
+                                            ))}
+
+                                            <button className="btn btn-link text-info text-decoration-none border-left mx-1">
+                                                {`( ${paging.from} to ${paging.to} of ${paging.total} )`}
+                                            </button>
+                                            
+                                        </p>
+                                    }  
                                 </div>
                             </div>
                         </div>

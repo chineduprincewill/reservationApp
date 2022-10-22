@@ -26,12 +26,17 @@ const ReserveRoom = () => {
 
         try{
 
-            const response = await axios.get('hotels',
+            const data = {
+                search_term : null
+            }
+
+            const response = await axios.post('hotels/search',
+                data,
                 {
                     headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
                 }
             );
-            setHotels(response.data.message.data);
+            setHotels(response.data.message);
             //console.log(response.data);
 
 
@@ -157,18 +162,10 @@ const ReserveRoom = () => {
                                                 <form >
                                                     <div className="row g-3 mb-0 align-items-center">
                                                         <div className="col-sm-auto">
-                                                            <div className="input-group">
-                                                                <input type="text" className="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022" />
-                                                                <div className="input-group-text bg-primary border-primary text-white">
-                                                                    <i className="ri-calendar-2-line"></i>
-                                                                </div>
-                                                            </div>
+                                                           
                                                         </div>
                                                         <div className="col-auto">
-                                                            <button type="button" className="btn btn-soft-success"><i className="ri-add-circle-line align-middle me-1"></i> Search...</button>
-                                                        </div>
-                                                        <div className="col-auto">
-                                                            <button type="button" className="btn btn-soft-info btn-icon waves-effect waves-light layout-rightside-btn"><i className="ri-pulse-line"></i></button>
+                                                            <Link to='/reservations' className="btn btn-soft-success"><i className="ri-add-circle-line align-middle me-1"></i> Reservations</Link>
                                                         </div>
                                                     </div>
                                                 </form>
