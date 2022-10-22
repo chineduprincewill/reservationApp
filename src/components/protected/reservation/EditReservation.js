@@ -110,7 +110,7 @@ const EditReservation = () => {
             if (!err?.response) {
                 console.log('No Server Response');
             } else {
-                alert(err.response.data.errors.hotel[0]);
+                //alert(err.response.data.errors.hotel[0]);
             }
         }
         
