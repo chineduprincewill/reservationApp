@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Login from './components/Login';
+import Categories from './components/protected/categories/Categories';
 import CreateHotel from './components/protected/CreateHotel';
 import Dashboard from './components/protected/Dashboard';
 import EditHotel from './components/protected/EditHotel';
@@ -36,6 +37,7 @@ const App = () => {
           <Route exact path='/create-hotel' element={<PrivateRoute><CreateHotel /></PrivateRoute>} />
           <Route exact path='/reservations' element={<PrivateRoute><Reservations /></PrivateRoute>} />
           <Route exact path='/edit-reservation' element={<PrivateRoute><EditReservation /></PrivateRoute>} />
+          <Route exact path='/category' element={<PrivateRoute><Categories /></PrivateRoute>} />
         </Routes>
       </Router>
     </AuthContextProvider>
