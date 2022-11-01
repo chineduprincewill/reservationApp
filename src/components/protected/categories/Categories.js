@@ -13,6 +13,7 @@ import {
 import axios from "../../../api/axios";
 import { AuthContext } from "../../../context/AuthContext"
 import Spinner from "../../layout/Spinner";
+import CategoryList from "./CategoryList";
 
 const Categories = () => {
 
@@ -33,6 +34,7 @@ const Categories = () => {
     const [attributes, setAttributes] = useState([]);
 
     const [submit, setSubmit] = useState('Submit');
+    const [createStat, setCreateStat] = useState();
    // const [searchterm, setSearchterm] = useState();
 
     const allCategories = useCallback(async () => {
@@ -93,13 +95,17 @@ const Categories = () => {
 
         try{
             setSubmit('Submitting...');
+            
+            let data = new FormData();
 
-            const data = {
-                name : categoryName,
-                due_date_duration : duration,
-                image,
-                attributes
-            }
+            data.append('name', categoryName);
+            data.append('due_date_duration', duration);
+            data.append('image', image);
+            attributes.map((attr, index) => {
+                data.append('attributes[]', attr);
+                return '';
+            })
+            
 
             console.log(data);
 
@@ -111,6 +117,8 @@ const Categories = () => {
             );
             
             console.log(response.data);
+            alert('Category successfully created!');
+            setCreateStat(Date.now());
             //setCategories(response.data.message.data);
             //setPaging(response.data.message);
 
@@ -126,11 +134,10 @@ const Categories = () => {
         setSubmit('Submit');
     }
 
-
     useEffect(() => {
 
         allCategories();
-    }, [allCategories])
+    }, [allCategories, createStat])
 
 
     return(
@@ -289,7 +296,7 @@ const Categories = () => {
                                     <h5 className="card-title mb-0">All categories</h5>
                                 </div>
                                 <div className="card-body">
-                                {categories === null ? <Spinner /> : (
+                                    {categories === null ? <Spinner /> : (
                                         <table id="model-datatables" className="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
                                             <thead>
                                                 <tr>
@@ -304,60 +311,15 @@ const Categories = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {categories.map(category => {
-                                                   return (<tr key={category.id}>
-                                                        <td>{category.id}</td>
-                                                        <td>{category.name}</td>
-                                                        <td>{category.slug}</td>
-                                                        <td>{category.description}</td>
-                                                        <td>{category.image}</td>
-                                                        <td>{category.attributes.map(
-                                                            (attr, index) => {
-                                                                return (
-                                                                    <span key={index}>{attr}, </span>
-                                                                )
-                                                            }
-                                                        )}</td>
-                                                        <td>{category.due_date_duration} days</td>
-                                                        <td>
-                                                            <div className="dropdown d-inline-block">
-                                                                <button className="btn btn-soft-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <i className="ri-more-fill align-middle"></i>
-                                                                </button>
-                                                                <ul className="dropdown-menu dropdown-menu-end">
-                                                                    <li>
-                                                                        <button data-bs-toggle="modal" data-bs-target={`#modal-${category.id}`} className="dropdown-item">
-                                                                            <i className="ri-eye-fill align-bottom me-2 text-muted"></i> Features
-                                                                        </button>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link to={`/category-detail/${category.id}`} className="dropdown-item edit-item-btn">
-                                                                            <i className="ri-search-eye-fill align-bottom me-2 text-muted"></i> View
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <Link 
-                                                                            to="/edit-hotel"
-                                                                            state={{ categoryObject : category }}
-                                                                            className="dropdown-item edit-item-btn"
-                                                                        >
-                                                                            <i className="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <button 
-                                                                            className="dropdown-item remove-item-btn"
-                                                                        >
-                                                                            <i className="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete
-                                                                        </button>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </td>
-                                                            
-                                                    </tr>)
-                                                })}
-                                               
+                                                { categories.length !== 0 ? 
+                                                (categories.map(category => {
+                                                   return(
+                                                      <CategoryList key={category.id} category={category} setCreateStat={setCreateStat} />
+                                                   )})) : 
+                                                <tr>
+                                                    <td colSpan={8}><span className="text text-danger p-3 w-100">No category record found yet!</span></td>
+                                                </tr>
+                                                }
                                             </tbody>
                                         </table>
                                     )}

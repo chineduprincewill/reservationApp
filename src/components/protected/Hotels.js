@@ -228,6 +228,7 @@ const Hotels = () => {
                                                 paging.links.map((link, index) => {
                                                     return (link.url !== null && 
                                                         <button 
+                                                            key={index}
                                                             className={link.active ? 'btn btn-info p-2' : 'btn btn-default p-2'}
                                                             onClick={(e) => goToPage(link.url)}
                                                         >
@@ -353,6 +354,7 @@ const Hotels = () => {
                                                 paging.links.map((link, index) => {
                                                     return (link.url !== null && 
                                                         <button 
+                                                            key={index}
                                                             className={link.active ? 'btn btn-info p-2' : 'btn btn-default p-2'}
                                                             onClick={(e) => goToPage(link.url)}
                                                         >
