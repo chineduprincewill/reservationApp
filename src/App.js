@@ -9,6 +9,7 @@ import EditHotel from './components/protected/EditHotel';
 import HotelDetail from './components/protected/HotelDetail';
 import Hotels from './components/protected/Hotels';
 import { PrivateRoute } from './components/protected/PrivateRoute';
+import Products from './components/protected/products/Products';
 import EditReservation from './components/protected/reservation/EditReservation';
 import Reservations from './components/protected/reservation/Reservations';
 import RoomTypes from './components/protected/rooms/RoomTypes';
@@ -38,6 +39,7 @@ const App = () => {
           <Route exact path='/reservations' element={<PrivateRoute><Reservations /></PrivateRoute>} />
           <Route exact path='/edit-reservation' element={<PrivateRoute><EditReservation /></PrivateRoute>} />
           <Route exact path='/category' element={<PrivateRoute><Categories /></PrivateRoute>} />
+          <Route exact path='/product' element={<PrivateRoute><Products /></PrivateRoute>} />
         </Routes>
       </Router>
     </AuthContextProvider>
