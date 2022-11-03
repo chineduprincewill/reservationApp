@@ -40,7 +40,7 @@ const Products = () => {
     const [price, setPrice] = useState();
     const [attributes, setAttributes] = useState({});
 
-    setAttributes();
+    //setAttributes();
 
     const [submit, setSubmit] = useState('Submit');
 
@@ -135,6 +135,7 @@ const Products = () => {
         }
 
         setSubmit('Submit');
+        setAttributes({});
     }
 
 
