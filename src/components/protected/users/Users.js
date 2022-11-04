@@ -399,6 +399,15 @@ const Users = () => {
                                                                         >
                                                                             <i className="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit
                                                                         </button>
+                                                                    </li>                            
+                                                                    <li>
+                                                                        <Link 
+                                                                            to='/cart'
+                                                                            state={{ userObject : user }}
+                                                                            className="dropdown-item remove-item-btn"
+                                                                        >
+                                                                            <i className="ri-briefcase-4-line align-bottom me-2 text-muted"></i> Add product
+                                                                        </Link>
                                                                     </li>
                                                                     <li>
                                                                         <button 
