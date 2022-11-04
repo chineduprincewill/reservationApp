@@ -14,11 +14,14 @@ const Cart = () => {
     const [products, setProducts] = useState(null);
     const [cart, setCart] = useState(null);
 
+    const [cartcode, setCartcode] = useState();
+
     const [product, setProduct] = useState();
     const [quantity, setQuantity] = useState();
 
     const [add, setAdd] = useState('add');
     const [remove, setRemove] = useState('remove');
+    const [checkout, setCheckout] = useState('Checkout');
 
     const [createStat, setCreateStat] = useState();
 
@@ -63,6 +66,9 @@ const Cart = () => {
             
             console.log(response.data.cart);
             setCart(response.data.cart);
+            setCartcode(response.data.status_code);
+
+            console.log(cartcode);
             //setPaging(response.data.message);
 
 
@@ -73,7 +79,7 @@ const Cart = () => {
                 console.log(err.response.data);
             }
         }
-    }, [token, id]);
+    }, [token, id, cartcode]);
 
 
     const addToCart = async () => {
@@ -152,6 +158,41 @@ const Cart = () => {
     }
 
 
+    const checkoutCart = async (cartid) => {
+
+        try{
+            setCheckout('Checking out...');
+
+            const data = {
+                user_id : id,
+                cart_id : cartid,
+                is_ordered : 1
+            }
+
+            const response = await axios.post('cart/checkout',
+            data,
+                {
+                    headers: { 'Accept' : 'application/json', 'Authorization' : `Bearer ${token}` }
+                }
+            );
+            
+            console.log(response.data);
+            alert('Checkout successful!');
+            setCreateStat(Date.now());
+
+        } catch (err) {
+            if (!err?.response) {
+                console.log('No Server Response');
+            } else {
+                console.log(err.response.data);
+            }
+        }
+
+        setCheckout('Checkout');
+        window.location.reload();
+    }
+
+
     useEffect(() => {
 
         allProducts();
@@ -204,7 +245,12 @@ const Cart = () => {
                                                             
                                                         </div>
                                                         <div className="col-auto">
-                                                            
+                                                            <Link 
+                                                                className="btn btn-danger"
+                                                                to='/users'
+                                                            >
+                                                                Back
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -312,11 +358,10 @@ const Cart = () => {
                                                         <th>Price</th>
                                                         <th>Quantity</th>
                                                         <th>Total</th>
-                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {cart.length === 0 ? <tr><td colSpan={5}>Cart is empty!</td></tr> : (
+                                                    {cartcode === 404 ? <tr><td colSpan={5}>Cart is empty!</td></tr> : (
                                                         cart.cart_products.map(item => {
                                                             return (
                                                                 <tr key={item.id}>
@@ -325,14 +370,31 @@ const Cart = () => {
                                                                     <td>&#8358; {item.product.price}</td>
                                                                     <td>{item.quantity}</td>
                                                                     <td>&#8358; {item.quantity * item.product.price}</td>
-                                                                    <td>...</td>
                                                                 </tr>
                                                             )
                                                         })
                                                     )}
+
+                                                    {cart.cart_products.length !== 0 && (
+
+                                                        <tr>
+                                                            <td colSpan={5}>
+                                                                <button 
+                                                                    className="btn btn-success mt-2 py-2"
+                                                                    onClick={(e) => checkoutCart(cart.id)}
+                                                                >
+                                                                    {checkout}
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+
+                                                    )}
+                        
                                                 </tbody>
                                             </table>
                                         )}
+
+                                        
                                     </div>
                                 </div>
                            </div> 
