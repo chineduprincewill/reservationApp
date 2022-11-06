@@ -64,8 +64,8 @@ const Cart = () => {
                 }
             );
             
-            console.log(response.data.cart_history);
-            setCart(response.data.cart_history);
+            console.log(response.data.cart);
+            setCart(response.data.cart);
             setCartcode(response.data.status_code);
 
             console.log(cartcode);
