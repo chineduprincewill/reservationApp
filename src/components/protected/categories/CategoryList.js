@@ -142,7 +142,7 @@ const CategoryList = ({category, setCreateStat}) => {
 
     return (
          <tr>
-            <td><img src={`https://lcm.viceodev.tech${category.image}`} height="50px" /></td>
+            <td><img src={`https://lcm.viceodev.tech${category.image}`} height="50px" alt="category image" /></td>
             <td>{category.name}</td>
             <td>{category.slug}</td>
             <td>{category.description}</td>
