@@ -132,6 +132,7 @@ const Categories = () => {
         }
 
         setSubmit('Submit');
+        setBasicModal(!basicModal);
     }
 
     useEffect(() => {
@@ -300,11 +301,10 @@ const Categories = () => {
                                         <table id="model-datatables" className="table table-bordered nowrap table-striped align-middle" style={{ width:"100%" }}>
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
+                                                    <th>Image</th>
                                                     <th>Name</th>
                                                     <th>Slug</th>
                                                     <th>Description</th>
-                                                    <th>Image</th>
                                                     <th>Attributes</th>
                                                     <th>Duration</th>
                                                     <th>Action</th>

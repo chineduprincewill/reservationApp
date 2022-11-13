@@ -142,11 +142,10 @@ const CategoryList = ({category, setCreateStat}) => {
 
     return (
          <tr>
-            <td>{category.id}</td>
+            <td><img src={`https://lcm.viceodev.tech${category.image}`} height="50px" /></td>
             <td>{category.name}</td>
             <td>{category.slug}</td>
             <td>{category.description}</td>
-            <td>{category.image}</td>
             <td>
                 {category.attributes.map(
                     (attr, index) => {
